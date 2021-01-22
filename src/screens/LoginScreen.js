@@ -16,7 +16,6 @@ class LoginScreen extends React.Component {
     password: "",
     errorMessage: null
   }
-  //Loading Check Logged?
   componentDidMount() {
     this.checkIfLoggedIn();
   }
