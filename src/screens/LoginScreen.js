@@ -37,7 +37,7 @@ class LoginScreen extends React.Component {
     LayoutAnimation.easeInEaseOut();
     return (
       <View style={styles.container}>
-        <Image source={require('../assets/backgrounds/backgroundPic.jpg')} style={{ justifyContent: 'center', alignItems: 'center', position: 'absolute', zIndex: -1, width: screenWidth, height: screenHeight + 50, }} />
+        {/* <Image source={require('../assets/backgrounds/backgroundPic.jpg')} style={{ justifyContent: 'center', alignItems: 'center', position: 'absolute', zIndex: -1, width: screenWidth, height: screenHeight + 50, }} /> */}
         <Text style={{ fontSize: 40, fontFamily: 'logo-font', marginTop: 140, marginBottom: 30, alignSelf: "center", color: '#0095f6' }}>eCommunity</Text>
         {/* <Image
           source={require('../assets/eTicket.png')}
