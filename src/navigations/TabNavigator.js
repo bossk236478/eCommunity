@@ -30,9 +30,11 @@ export default function MyTabs() {
                         iconName = 'ios-search'
                         // } else if (route.name === 'Post') {
                         //     iconName = 'ios-add-circle-outline'
-                    } else if (route.name === 'QRscanner') {
-                        iconName = 'ios-qr-scanner'
-                    } else if (route.name === 'Profile') {
+                    }
+                    //  else if (route.name === 'QRscanner') {
+                    //     iconName = 'ios-qr-scanner'
+                    // }
+                     else if (route.name === 'Profile') {
                         iconName = 'ios-person'
                     }
 
@@ -47,7 +49,7 @@ export default function MyTabs() {
             <Tab.Screen name="Search" component={SearchScreen} />
             <Tab.Screen name="Route" component={RoutesNavigator} />
             {/* <Tab.Screen name="Post" component={PostScreen} /> */}
-            <Tab.Screen name="QRscanner" component={ScannerScreen} />
+            {/* <Tab.Screen name="QRscanner" component={ScannerScreen} /> */}
             <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
     )

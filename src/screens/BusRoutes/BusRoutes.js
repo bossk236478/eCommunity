@@ -6,13 +6,9 @@ import { Searchbar } from 'react-native-paper'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getUser } from '../../reducers/actions/user'
 import { getRoutes } from '../../reducers/actions/routes'
-import { array } from 'prop-types';
 
 const screenWidth = Dimensions.get('window').width
-
-
 
 class BusRoutes extends React.Component {
 
@@ -31,10 +27,7 @@ class BusRoutes extends React.Component {
     }
 
     componentDidMount() {
-        //this.makeRemoteRequest()
         this.props.getRoutes()
-        //this.arrayholder = this.props.busRoute.feed
-        //console.log(this.state.data)
     }
     handleRefresh() {
         this.setState({
@@ -61,12 +54,12 @@ class BusRoutes extends React.Component {
 
     handleSearch = (search) => {
         let result = this.props.busRoute.feed.filter(item => {
-            const itemData = `${item.name.toUpperCase()}`
+            const itemData = `${item.name.toUpperCase()} ${item.stations.toUpperCase()}`
             const textData = search.toUpperCase()
 
             return itemData.indexOf(textData) > -1
         })
-        console.log(result)
+        //console.log(result)
         this.setState({
             data: result
         })
@@ -108,7 +101,6 @@ class BusRoutes extends React.Component {
                                     <Text style={{ fontSize: 20 }}>{item.name}</Text>
                                     <Text style={{ fontSize: 15, }}>{item.price} vnđ</Text>
                                     <Text style={{ fontSize: 15, }}>{item.detail}</Text>
-                                    {/* <Text style={{ fontSize: 20 }}>{`${item.name.first} ${item.name.last}`}</Text> */}
                                 </View>
                             </TouchableOpacity>
 

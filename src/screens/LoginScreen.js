@@ -17,6 +17,7 @@ class LoginScreen extends React.Component {
     errorMessage: null
   }
   componentDidMount() {
+    LogBox.ignoreLogs(['Setting a timer']);
     this.checkIfLoggedIn();
   }
   checkIfLoggedIn = () => {
@@ -29,10 +30,7 @@ class LoginScreen extends React.Component {
     }.bind(this));
   }
 
-  //Login Email Password
-
   render() {
-    LogBox.ignoreLogs(['Setting a timer']);
     LayoutAnimation.easeInEaseOut();
     return (
       <View style={styles.container}>

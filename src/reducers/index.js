@@ -6,14 +6,6 @@ const busRoute = (state = {}, action) => {
             return {
                 ...state, feed: action.payload
             }
-        // case 'GET_SPECIFIC_ROUTES':
-        //     return {
-        //         ...state, specific_feed: action.payload
-        //     }
-        // case 'GET_DETAIL':
-        //     return {
-        //         ...state, details: action.payload
-        //     }
         default:
             return state
     }

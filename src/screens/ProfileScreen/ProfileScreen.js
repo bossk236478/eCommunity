@@ -212,13 +212,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
 
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         alignItems: 'center',
-//         justifyContent: 'center',
-//     },
-// });
 const styles = StyleSheet.create({
     container: {
         flex: 1,

@@ -1,10 +1,8 @@
 import React from 'react'
-import { AppLoading } from 'expo'
 import { View, Text, StyleSheet, Image, FlatList, Dimensions, SafeAreaView, TouchableOpacity, LogBox, RefreshControl, ActivityIndicator } from "react-native";
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-//import { getUser } from "../../reducers/actions/user";
 import { getPosts, likePost, unlikePost, savePost, unsavePost, getOnePost } from '../../reducers/actions/posts'
 
 import PostComponent from './components/PostComponent'
@@ -68,6 +66,7 @@ class HomeScreen extends React.Component {
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <TouchableOpacity
                             onPress={() => 
+                                //console.log(this.props.user.email)
                                 this.props.navigation.navigate('Post')
                             }
                         >

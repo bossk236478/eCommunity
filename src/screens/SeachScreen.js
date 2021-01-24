@@ -29,7 +29,7 @@ class SearchScreen extends React.Component {
 
             return itemData.indexOf(textData) > -1
         })
-        console.log(result)
+        //console.log(result)
         this.setState({
             data: result
         })
@@ -50,7 +50,7 @@ class SearchScreen extends React.Component {
                     renderItem={({ item }) => (
                         <View style={{ width: screenWidth, height: 80, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomColor: 'grey', borderBottomWidth: 0.07 }}>
                             <TouchableOpacity
-                                onPress={() => props.navigation.navigate("ProfileScreen", item.uid)}
+                                onPress={() => this.props.navigation.navigate("ProfileScreen", item.uid)}
                                 style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}
                             >
                                 <Image source={{ uri: item.photo }} style={{ width: 50, height: 50, borderRadius: 50 / 2, margin: 15 }} />
