@@ -48,7 +48,7 @@ export const uploadPost = () => {
                 id: id,
                 uid: user.uid,
                 photo: user.photo,
-                photos: post.photos,
+                photos: post.photos||'',
                 username: user.username,
                 date: new Date().getTime(),
                 savedBy: [],

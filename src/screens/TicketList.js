@@ -11,21 +11,43 @@ class TicketList extends React.Component {
 
     state = {
         data: [],
+        refreshing: false
     }
 
     componentDidMount() {
         const { params } = this.props.route
-        if (this.state.data !== this.getTickets(params)) {
-            this.setState({
-                data: this.getTickets(params)
-            })
-        }
+        this.setState({
+            data: this.getTickets(params)
+        })
+    }
+    handleRefresh() {
+        this.setState({
+            refreshing: true
+        },
+            () => {
+                const { params } = this.props.route
+                console.log(this.state.data)
+                console.log(this.getTickets(params))
+                if (this.state.data == this.getTickets(params)) {
+                    this.setState({
+                        refreshing: false
+                    })
+                    console.log('===')
+                } else {
+                    this.setState({
+                        data: this.getTickets(params),
+                        refreshing: false
+                    })
+                    console.log('!==')
+                }
+            }
+        )
     }
 
     getTickets = async (uid) => {
 
         let tickets = []
-        const ticketsQuery = await db.collection('tickets').where('uid', '==', uid).get()
+        const ticketsQuery = await db.collection('tickets').where('uid', '==', uid).where('status', '==', 'active').get()
         ticketsQuery.forEach(function (response) {
             tickets.push(response.data())
         })
@@ -37,10 +59,11 @@ class TicketList extends React.Component {
     }
 
     render() {
-        const { params } = this.props.route
         return (
             <View style={{ flex: 1, justifyContent: "center" }}>
                 <FlatList
+                    // onRefresh={() => this.handleRefresh()}
+                    // refreshing={this.state.refreshing}
                     numColumns={1}
                     horizontal={false}
                     data={this.state.data}
@@ -50,7 +73,7 @@ class TicketList extends React.Component {
                             <View style={{ margin: 15, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                                 <QRCode
                                     //QR code value
-                                    value={item.url}
+                                    value={item.id}
                                     //size of QR Code
                                     size={80}
                                     //Color of the QR Code (Optional)

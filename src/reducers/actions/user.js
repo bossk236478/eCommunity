@@ -43,14 +43,14 @@ export const signUp = () => {
                     posts: [],
                     bio: '',
                     likes: 0,
-                    photo: photo,
+                    photo: photo || 'https://firebasestorage.googleapis.com/v0/b/eticket-14085.appspot.com/o/image%2Fundentified_user.png?alt=media&token=fdc12f18-333d-43b3-989f-783b3b669f59',
                     savedPosts: [],
                     followers: [],
                     following: []
                 }
                 await db.collection('users').doc(response.user.uid).set(user)
                 dispatch({ type: 'LOGIN', payload: user })
-                //alert('User has been signed up!')
+                alert('User has been signed up!')
             }
         } catch (e) {
             alert(e);
@@ -91,6 +91,20 @@ export const getUser = (uid, type) => {
             //console.log('getUser');
             //alert(e);
         }
+    }
+}
+export const getUserData = () => {
+    return async (dispatch, getState) => {
+        const userlist = await db
+            .collection("users")
+            .get()
+
+        let array = []
+        userlist.forEach(list => {
+            array.push(list.data())
+        });
+
+        dispatch({ type: "GET_USERS", payload: array })
     }
 }
 export const getUserPhoto = (uid) => {
@@ -183,9 +197,9 @@ export const updateUser = () => {
                 bio: bio,
                 photo: photo,
             })
-            db.collection("posts").where("uid", "==", uid).update({
-                photo: photo
-            })
+            // db.collection("posts").where("uid", "==", uid).update({
+            //     photo: photo
+            // })
             alert('Successfully')
         } catch (e) {
             alert(e)

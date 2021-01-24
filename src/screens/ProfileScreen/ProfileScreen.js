@@ -96,7 +96,7 @@ class ProfileScreen extends React.Component {
                             </View>
                         </View>
 
-                        <View style={{ marginTop: 32 }}>
+                        <View style={{ marginTop: 15 }}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                                 <FlatList
                                     numColumns={10}

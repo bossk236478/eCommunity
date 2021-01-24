@@ -63,7 +63,10 @@ export default class PostComponent extends React.Component {
             <View style={{ paddingBottom: 20, borderBottomWidth: 0.5 }}>
                 <View style={{ width: screenWidth, height: 80, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomColor: 'grey', borderBottomWidth: 0.07 }}>
                     <TouchableOpacity
-                        onPress={() => this.props.navigation.navigate('ProfileScreen', this.props.item.uid)}
+                        onPress={() =>
+                            //console.log(this.props.item.photos.length)
+                            this.props.navigation.navigate('ProfileScreen', this.props.item.uid)
+                        }
                         style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <Image source={{ uri: this.props.item.photo }} style={{ width: 50, height: 50, borderRadius: 50 / 2, margin: 15 }} />
                         <Text style={{ fontWeight: 'bold', fontSize: 15, }}>{this.props.item.username}</Text>
@@ -76,16 +79,19 @@ export default class PostComponent extends React.Component {
                     <Text style={{ fontSize: 18, marginLeft: 20, marginTop: -5, marginBottom: 5 }}>{this.props.item.description}</Text>
                 </View>
                 <View style={{ borderWidth: 0.25 }}>
-                    <ScrollView
-                        horizontal={true}
-                        pagingEnabled={true}
-                    >
-                        {
-                            this.props.item.photos?.map(e =>
-                                <Image source={{ uri: e }} style={{ width: screenWidth, height: 350, }} />
-                            )
-                        }
-                    </ScrollView>
+                    {
+                        this.props.item.photos.length != 0 ?
+                            <ScrollView
+                                horizontal={true}
+                                pagingEnabled={true}
+                            >
+                                {
+                                    this.props.item.photos?.map(e =>
+                                        <Image source={{ uri: e }} style={{ width: screenWidth, height: 350, }} />
+                                    )
+                                }
+                            </ScrollView> : null
+                    }
                 </View>
                 <View
                     style={{ width: screenWidth, flexDirection: "row", justifyContent: "space-between", height: 50, alignItems: 'center' }}

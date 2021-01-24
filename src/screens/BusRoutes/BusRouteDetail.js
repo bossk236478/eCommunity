@@ -6,8 +6,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getRoutes, newTicket } from '../../reducers/actions/routes'
 
-import QRCode from 'react-native-qrcode-svg';
-import uuid from 'uuid';
 import moment from 'moment'
 
 class BusRoutesDetail extends React.Component {
@@ -19,7 +17,7 @@ class BusRoutesDetail extends React.Component {
         detail: undefined,
         price: undefined,
         currentUser: undefined,
-        qrString: uuid.v4()
+        //qrString: uuid.v4()
     }
     componentDidMount() {
         const { params } = this.props.route
@@ -32,6 +30,7 @@ class BusRoutesDetail extends React.Component {
             price: params.price,
             currentUser: params.currentUser
         })
+        //console.log(this.state.qrString)
     }
     render() {
         return (
@@ -44,7 +43,7 @@ class BusRoutesDetail extends React.Component {
 
                     </View>
 
-                    <View style={{ width: '100%', marginTop: 50, marginBottom: 20, justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ width: '100%', marginTop: 10, marginBottom: 20, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ width: 80, height: 80, borderRadius: 50, backgroundColor: '#5facdb', justifyContent: 'center', alignItems: 'center' }}>
                             <Icon name="bus-articulated-front" size={50} color="white" />
                         </View>
@@ -81,13 +80,13 @@ class BusRoutesDetail extends React.Component {
 
                         <TouchableOpacity
                             style={{ height: 50, width: 200, marginLeft: 5, marginTop: 25, borderRadius: 25, borderWidth: 0.25, alignContent: "center", justifyContent: 'center' }}
-                            onPress={() => this.props.newTicket(this.state.currentUser, this.state.id, this.state.qrString, this.state.arrival, this.state.departure, this.state.name)
+                            onPress={() => this.props.newTicket(this.state.currentUser, this.state.id, this.state.arrival, this.state.departure, this.state.name)
                             }
                         >
                             <Text style={{ color: "black", textAlign: "center", fontSize: 18 }}>Confirm</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, justifyContent: 'center', marginLeft: 105, marginBottom: 10 }}>
+                    {/* <View style={{ flex: 1, justifyContent: 'center', marginLeft: 105, marginBottom: 10 }}>
                         <QRCode
                             //QR code value
                             value={this.state.qrString}
@@ -96,7 +95,7 @@ class BusRoutesDetail extends React.Component {
                             //Color of the QR Code (Optional)
                             color="black"
                         />
-                    </View>
+                    </View> */}
                 </ImageBackground>
 
             </SafeAreaView>

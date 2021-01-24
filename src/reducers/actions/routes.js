@@ -17,20 +17,37 @@ export const getRoutes = () => {
         dispatch({ type: "GET_ROUTES", payload: array })
     }
 }
-export const newTicket = (uid, busID, qrString, arrival, departure, name) => {
+// export const getSpecificRoutes = () => {
+//     return async (dispatch, getState) => {
+//         const routes = await db
+//             .collection("routes")
+//             .doc()
+//             .get()
+
+//         let array = []
+//         routes.forEach(route => {
+//             array.push(route.data())
+//         });
+//         //console.log(array)
+
+//         dispatch({ type: "GET_SPECIFIC_ROUTES", payload: array })
+//     }
+// }
+export const newTicket = (uid, busID, arrival, departure, name) => {
     return async (dispatch, getState) => {
         try {
             const id = uuid.v4()
+            //console.log(qrString)
             const upload = {
                 id: id,
                 uid: uid,
                 busID: busID,
-                url: qrString,
+                //url: qrString,
                 date: new Date().getTime(),
-                arrival:arrival,
-                departure:departure,
-                name:name,
-                status:'enable'
+                arrival: arrival,
+                departure: departure,
+                name: name,
+                status: 'active'
             }
 
             await db

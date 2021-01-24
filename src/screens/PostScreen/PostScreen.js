@@ -53,6 +53,7 @@ class PostScreen extends React.Component {
     }
 
     uploadPost = () => {
+        this.props.navigation.pop()
         this.props.navigation.navigate('PostConfirm')
     }
 

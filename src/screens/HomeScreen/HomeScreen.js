@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, Image, FlatList, Dimensions, SafeAreaView, Touc
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getUser, getUserPhoto } from "../../reducers/actions/user";
+//import { getUser } from "../../reducers/actions/user";
 import { getPosts, likePost, unlikePost, savePost, unsavePost, getOnePost } from '../../reducers/actions/posts'
 
 import PostComponent from './components/PostComponent'
@@ -67,7 +67,8 @@ class HomeScreen extends React.Component {
                     <Text style={{ fontSize: 30, fontFamily: 'logo-font', color: 'black', marginTop: 5, marginLeft: 10 }}>eCommunity</Text>
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('Post')
+                            onPress={() => 
+                                this.props.navigation.navigate('Post')
                             }
                         >
                             <Image source={require('../../assets/Images/share.jpg')} style={{ width: 26, height: 26, margin: 10 }} />
@@ -107,7 +108,7 @@ class HomeScreen extends React.Component {
     }
 }
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ getUser, getPosts, likePost, unlikePost, savePost, unsavePost, getOnePost, getUserPhoto }, dispatch)
+    return bindActionCreators({  getPosts, likePost, unlikePost, savePost, unsavePost, getOnePost}, dispatch)
 }
 const mapStateToProps = (state) => {
     return {

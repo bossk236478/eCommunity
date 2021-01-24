@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeNavigator from './HomeNavigatior'
 //import HomeScreen from '../screens/HomeScreen/HomeScreen'
 import SearchScreen from '../screens/SeachScreen'
-// import QRcodeScreen from '../screens/TicketList'
+import ScannerScreen from '../screens/ScannerScreen'
 // import PostScreen from '../screens/PostScreen/PostScreen'
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen'
 import RoutesNavigator from './RoutesNavigator'
@@ -30,8 +30,8 @@ export default function MyTabs() {
                         iconName = 'ios-search'
                         // } else if (route.name === 'Post') {
                         //     iconName = 'ios-add-circle-outline'
-                        // } else if (route.name === 'QRcode') {
-                        //     iconName = 'ios-qr-scanner'
+                    } else if (route.name === 'QRscanner') {
+                        iconName = 'ios-qr-scanner'
                     } else if (route.name === 'Profile') {
                         iconName = 'ios-person'
                     }
@@ -45,9 +45,9 @@ export default function MyTabs() {
             }}>
             <Tab.Screen name="Home" component={HomeNavigator} />
             <Tab.Screen name="Search" component={SearchScreen} />
-            <Tab.Screen name="Route" component={RoutesNavigator}/>
+            <Tab.Screen name="Route" component={RoutesNavigator} />
             {/* <Tab.Screen name="Post" component={PostScreen} /> */}
-            {/* <Tab.Screen name="QRcode" component={QRcodeScreen} /> */}
+            <Tab.Screen name="QRscanner" component={ScannerScreen} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
     )
