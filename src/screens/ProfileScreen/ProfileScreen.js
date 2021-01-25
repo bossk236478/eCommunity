@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView, SafeAreaView, FlatList } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView, SafeAreaView, FlatList, Modal, TouchableHighlight, Alert } from 'react-native';
 import * as firebase from 'firebase';
 
 import db from '../../config/firebase';
@@ -19,7 +19,8 @@ class ProfileScreen extends React.Component {
 
     state = {
         visible: false,
-        data: undefined
+        data: undefined,
+        modalVisible: false
     }
 
     componentDidMount = () => {
@@ -41,7 +42,19 @@ class ProfileScreen extends React.Component {
         this.props.getOnePost(post)
         this.props.navigation.navigate('OnePost')
     }
+    setModalVisible = (visible) => {
+        this.setState({ modalVisible: visible });
+    }
+    handleChangePass() {
+        //this.props.navigation.navigate('Change Pass')
+        this.setModalVisible(false)
+    }
+    handleLogOut() {
+        firebase.auth().signOut()
+        this.setModalVisible(false)
+    }
     render() {
+        const { modalVisible } = this.state;
         const { params } = this.props.route
         if (params == undefined || params == this.props.user.uid) {
             return (
@@ -49,14 +62,40 @@ class ProfileScreen extends React.Component {
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <View style={styles.titleBar}>
                             <TouchableOpacity
+                                activeOpacity='10'
                                 onPress={() => this.props.navigation.navigate('TicketList', this.props.user.uid)
                                 }
                             >
-                                <AntDesign name="qrcode" size={40} color="black" />
+                                <AntDesign name="qrcode" size={50} color="black" />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => firebase.auth().signOut()}>
-                                <Ionicons name="md-exit" size={40} color="black" />
-                                {/* <Ionicons name="md-more" size={40} color="#52575D"></Ionicons> */}
+                            <TouchableOpacity onPress={() => this.setModalVisible(true)
+                                // firebase.auth().signOut()
+                            }>
+                                {/* <Ionicons name="md-exit" size={40} color="black" /> */}
+                                <Ionicons name="md-more" size={50} color="#52575D"></Ionicons>
+                                <Modal
+                                    animationType='none'
+                                    transparent={true}
+                                    visible={modalVisible}
+                                    onRequestClose={() => {
+                                        this.setModalVisible(!modalVisible)
+                                    }}
+                                >
+                                    <View style={styles.centeredView}>
+                                        <View style={styles.modalView}>
+                                            <TouchableOpacity
+                                                onPress={() => this.handleChangePass()}
+                                            >
+                                                <Text style={styles.modalText}>Change Password</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                onPress={() => this.handleLogOut()}
+                                            >
+                                                <Text style={styles.modalText}>Log out!</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </Modal>
                             </TouchableOpacity>
                         </View>
 
@@ -154,7 +193,7 @@ class ProfileScreen extends React.Component {
                             </View>
                         </View>
 
-                        {/* {
+                        {
                             (this.props.profile.followers?.includes(this.props.user.uid))
                                 ?
                                 <View style={{ width: '100%', height: 60, flexDirection: 'row', justifyContent: 'center' }}>
@@ -174,7 +213,7 @@ class ProfileScreen extends React.Component {
                                         <Text style={{ color: 'black', fontSize: 19, fontWeight: "bold" }}>Follow</Text>
                                     </TouchableOpacity>
                                 </View>
-                        } */}
+                        }
 
                         <View style={{ marginTop: 32 }}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -283,4 +322,37 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         borderWidth: 0.5
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "flex-end",
+        marginTop: 20
+    },
+    modalView: {
+        marginTop: 10,
+        backgroundColor: "white",
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        height: screenHeight / 8,
+        width: screenWidth / 2
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        textAlign: "center",
+        marginBottom: 15,
+        marginTop: 5
+    }
 });

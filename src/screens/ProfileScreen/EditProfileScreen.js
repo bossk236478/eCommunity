@@ -84,9 +84,6 @@ class EditProfileScreen extends React.Component {
                 <TouchableOpacity onPress={() => this.onEdit()} style={{ width: screenWidth * .9, alignItems: 'center', backgroundColor: 'beige', height: 60, borderRadius: 20, justifyContent: 'center', shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, elevation: 3, top: 100, }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black', }}>ACCEPT CHANGES</Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity onPress={() => console.log(this.props.post.photo)} style={{ width: screenWidth * .9, alignItems: 'center', backgroundColor: 'beige', height: 60, borderRadius: 20, justifyContent: 'center', shadowOffset: { width: 5, height: 5 }, shadowOpacity: 1, elevation: 3, top: 100, }}>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'black', }}>test</Text>
-                </TouchableOpacity> */}
 
             </View>
         )

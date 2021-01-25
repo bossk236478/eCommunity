@@ -4,11 +4,11 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons'
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getRoutes, newTicket } from '../../reducers/actions/routes'
+import { getRoutes, newTicket } from '../../../reducers/actions/routes'
 
 import moment from 'moment'
 
-class BusRoutesDetail extends React.Component {
+class TicketDetail extends React.Component {
     state = {
         id: undefined,
         name: undefined,
@@ -40,7 +40,7 @@ class BusRoutesDetail extends React.Component {
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <ImageBackground
-                    source={require('../../assets/back2.png')}
+                    source={require('../../../assets/back2.png')}
                     style={{ height: '100%', width: '100%', justifyContent: 'center' }}
                 >
                     <View style={{ marginTop: 50, justifyContent: 'flex-start' }}>
@@ -118,4 +118,4 @@ const mapStateToProps = (state) => {
         busRoute: state.busRoute
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(BusRoutesDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(TicketDetail)

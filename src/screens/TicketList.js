@@ -60,30 +60,39 @@ class TicketList extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: "center" }}>
-                <FlatList
-                    // onRefresh={() => this.handleRefresh()}
-                    // refreshing={this.state.refreshing}
-                    numColumns={1}
-                    horizontal={false}
-                    data={this.state.data}
-                    keyExtractor={item => JSON.stringify(item.id)}
-                    renderItem={({ item }) => (
-                        <View style={{ width: screenWidth, height: 100, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomColor: 'grey', borderBottomWidth: 0.07 }}>
-                            <View style={{ margin: 15, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                                <QRCode
-                                    //QR code value
-                                    value={item.id}
-                                    //size of QR Code
-                                    size={80}
-                                    //Color of the QR Code (Optional)
-                                    color="black"
-                                />
-                                <Text style={{ fontSize: 16, marginLeft: 16 }}>{item.departure}  ----  {item.arrival}</Text>
-                            </View>
+            <View style={{ flex: 1 }}>
+                {
+                    (this.state.data == '')
+                        ?
+                        <View style={{ alignItems: 'flex-start', backgroundColor: 'white', borderBottomColor: 'grey', borderBottomWidth: 0.07 }}>
+                            <Text style={{ fontSize: 16, marginLeft: 16 }}>No information</Text>
                         </View>
-                    )}
-                />
+                        :
+                        <FlatList
+                            // onRefresh={() => this.handleRefresh()}
+                            // refreshing={this.state.refreshing}
+                            numColumns={1}
+                            horizontal={false}
+                            data={this.state.data}
+                            keyExtractor={item => JSON.stringify(item.id)}
+                            renderItem={({ item }) => (
+                                <View style={{ width: screenWidth, height: 100, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomColor: 'grey', borderBottomWidth: 0.07 }}>
+                                    <View style={{ margin: 15, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                                        <QRCode
+                                            //QR code value
+                                            value={item.id}
+                                            //size of QR Code
+                                            size={80}
+                                            //Color of the QR Code (Optional)
+                                            color="black"
+                                        />
+                                        <Text style={{ fontSize: 16, marginLeft: 16 }}>{item.departure}  ----  {item.arrival}</Text>
+                                    </View>
+                                </View>
+                            )}
+                        />
+                }
+
             </View>
         );
     }
