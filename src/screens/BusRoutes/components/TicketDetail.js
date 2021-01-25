@@ -28,13 +28,14 @@ class TicketDetail extends React.Component {
             departure: params.departure,
             detail: params.detail,
             price: params.price,
+            stations: params.stations,
             currentUser: params.currentUser
         })
         //console.log(this.state.qrString)
     }
     handleConfirm() {
-        this.props.newTicket(this.state.currentUser, this.state.id, this.state.arrival, this.state.departure, this.state.name)
-        this.props.navigation.pop()
+        this.props.newTicket(this.state.currentUser, this.state.id, this.state.arrival, this.state.departure, this.state.name, this.state.price)
+        this.props.navigation.replace('BusRoute')
     }
     render() {
         return (
@@ -53,7 +54,7 @@ class TicketDetail extends React.Component {
                         </View>
                     </View>
 
-                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 35, justifyContent:'center' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 35, justifyContent: 'center' }}>
                         <Text style={{ fontSize: 20, color: '#FFF' }}>{this.state.arrival}</Text>
                         <Text style={{ fontSize: 18, color: '#a2a2db', paddingHorizontal: 10 }}>- - - -</Text>
                         <Text style={{ fontSize: 20, color: '#FFF' }}>{this.state.departure}</Text>
@@ -84,7 +85,7 @@ class TicketDetail extends React.Component {
 
                         <TouchableOpacity
                             style={{ height: 50, width: 200, marginLeft: 5, marginTop: 25, borderRadius: 25, borderWidth: 0.25, alignContent: "center", justifyContent: 'center' }}
-                            onPress={() => this.props.newTicket(this.state.currentUser, this.state.id, this.state.arrival, this.state.departure, this.state.name)
+                            onPress={() => this.handleConfirm()
                             }
                         >
                             <Text style={{ color: "black", textAlign: "center", fontSize: 18 }}>Confirm</Text>

@@ -33,8 +33,8 @@ export const getRoutes = () => {
 //         dispatch({ type: "GET_SPECIFIC_ROUTES", payload: array })
 //     }
 // }
-export const newTicket = (uid, busID, arrival, departure, name) => {
-    return async (dispatch, getState) => {
+export const newTicket = (uid, busID, arrival, departure, name, price) => {
+    return async () => {
         try {
             const id = uuid.v4()
             //console.log(qrString)
@@ -47,6 +47,7 @@ export const newTicket = (uid, busID, arrival, departure, name) => {
                 arrival: arrival,
                 departure: departure,
                 name: name,
+                price:price,
                 status: 'active'
             }
 

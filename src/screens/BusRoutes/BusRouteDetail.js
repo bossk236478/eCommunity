@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text, Alert, Modal, ImageBackground, TouchableOpacity, SafeAreaView } from 'react-native'
-import Icon from '@expo/vector-icons/MaterialCommunityIcons'
+import { View, Text, Alert, Modal, ImageBackground, TouchableOpacity, SafeAreaView, StyleSheet, TextInput, ScrollView } from 'react-native'
+import { Feather, FontAwesome5 } from '@expo/vector-icons';
 
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getRoutes, newTicket } from '../../reducers/actions/routes'
 
 import moment from 'moment'
+
 
 class BusRoutesDetail extends React.Component {
     state = {
@@ -16,6 +17,7 @@ class BusRoutesDetail extends React.Component {
         departure: undefined,
         detail: undefined,
         price: undefined,
+        stations: undefined,
         currentUser: undefined,
         //qrString: uuid.v4()
     }
@@ -28,86 +30,103 @@ class BusRoutesDetail extends React.Component {
             departure: params.departure,
             detail: params.detail,
             price: params.price,
+            stations: params.stations,
             currentUser: params.currentUser
         })
         //console.log(this.state.qrString)
     }
-    handleConfirm() {
-        this.props.newTicket(this.state.currentUser, this.state.id, this.state.arrival, this.state.departure, this.state.name)
-        this.props.navigation.pop()
-    }
     render() {
+        const image = { uri: "https://images.pexels.com/photos/672358/pexels-photo-672358.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940%27" };
         return (
             <SafeAreaView style={{ flex: 1 }}>
                 <ImageBackground
-                    source={require('../../assets/back2.png')}
-                    style={{ height: '100%', width: '100%', justifyContent: 'center' }}
+                    source={image}
+                    style={{ width: '100%', height: 250, justifyContent: 'flex-end' }}
+                    imageStyle={{ borderBottomRightRadius: 30, borderBottomLeftRadius: 30 }}
                 >
-                    <View style={{ marginTop: 50, justifyContent: 'flex-start' }}>
 
-                    </View>
-
-                    <View style={{ width: '100%', marginTop: 10, marginBottom: 20, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ width: 80, height: 80, borderRadius: 50, backgroundColor: '#5facdb', justifyContent: 'center', alignItems: 'center' }}>
-                            <Icon name="bus-articulated-front" size={50} color="white" />
-                        </View>
-                    </View>
-
-                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 35, justifyContent:'center' }}>
-                        <Text style={{ fontSize: 20, color: '#FFF' }}>{this.state.arrival}</Text>
-                        <Text style={{ fontSize: 18, color: '#a2a2db', paddingHorizontal: 10 }}>- - - -</Text>
-                        <Text style={{ fontSize: 20, color: '#FFF' }}>{this.state.departure}</Text>
-                    </View>
-
-                    <Text style={{ paddingHorizontal: 40, color: '#a2a2db', }}>{moment(new Date().getTime()).format('ll')}</Text>
-
-                    <View
-                        onPress={this.props.onPress}
-                        style={{ marginLeft: 40, paddingHorizontal: 36, alignItems: 'center', marginTop: 30, backgroundColor: '#FFF', height: 265, width: 280, borderRadius: 15, borderWidth: 0.25 }}
-                    >
-                        <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
-                            <Text style={{ color: '#522289', fontSize: 16 }}>09:00 AM - 20:00 PM</Text>
-                        </View>
-
-                        <Text style={{ color: "#a2a2db", fontSize: 12, }}>{moment(new Date().getTime()).format('ll')}</Text>
-
-                        <View style={{ flexDirection: 'row', marginTop: 15, alignItems: 'center' }}>
-                            <Text style={{ color: '#522289', fontSize: 16 }}>{this.props.user.username}</Text>
-                        </View>
-
-                        <Text style={{ fontSize: 17, marginRight: -5, marginVertical: 8, color: "#a2a2db", }}>- - - - - - - - - - - - - - - - -</Text>
-
-                        <View style={{ flexDirection: "row", marginTop: -8, alignItems: "center", }} >
-                            <Text style={{ color: "#522289", fontSize: 16, }} >Total: </Text>
-                            <Text style={{ color: "#4b3ca7", paddingLeft: 75, fontSize: 16, }} >{this.state.price} vnđ</Text>
-                        </View>
-
-                        <TouchableOpacity
-                            style={{ height: 50, width: 200, marginLeft: 5, marginTop: 25, borderRadius: 25, borderWidth: 0.25, alignContent: "center", justifyContent: 'center' }}
-                            onPress={() => this.props.newTicket(this.state.currentUser, this.state.id, this.state.arrival, this.state.departure, this.state.name)
-                            }
-                        >
-                            <Text style={{ color: "black", textAlign: "center", fontSize: 18 }}>Confirm</Text>
-                        </TouchableOpacity>
-                    </View>
-                    {/* <View style={{ flex: 1, justifyContent: 'center', marginLeft: 105, marginBottom: 10 }}>
-                        <QRCode
-                            //QR code value
-                            value={this.state.qrString}
-                            //size of QR Code
-                            size={150}
-                            //Color of the QR Code (Optional)
-                            color="black"
-                        />
-                    </View> */}
+                    <Text style={styles.Placename}>Explore</Text>
+                    <Text style={styles.Tagline}>{this.state.arrival} ---- {this.state.departure}</Text>
                 </ImageBackground>
+                <TouchableOpacity
+                    style={styles.BookBtn}
+                    onPress={() =>
+                        //this.handleSearch()
+                        //console.log(item.id)
+                        this.props.navigation.navigate('TicketDetail', {
+                            id: this.state.id,
+                            name: this.state.name,
+                            price: this.state.price,
+                            arrival: this.state.arrival,
+                            departure: this.state.departure,
+                            detail: this.state.detail,
+                            stations: this.state.stations,
+                            currentUser: this.props.user.uid
+                        })
+                    }
+                >
+                    <Text style={styles.BookText}>Book Now!</Text>
+                </TouchableOpacity>
 
+                <ScrollView>
+                    <Text style={{ padding: 10, fontSize: 20, fontWeight: 'bold' }}>Detail</Text>
+                    <Text style={{ paddingHorizontal: 20, fontSize: 14, fontWeight: 'normal', opacity: 0.3, justifyContent: 'flex-start', textAlign: 'justify', lineHeight: 26 }}>{this.state.stations}</Text>
+                </ScrollView>
             </SafeAreaView>
         );
     }
 }
 
-
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    searchContainer: {
+        paddingTop: 100,
+        paddingLeft: 16
+    },
+    DarkOverlay: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        left: 0,
+        height: 270,
+        backgroundColor: '#000',
+        opacity: 0.2,
+        borderBottomRightRadius: 65
+    },
+    Tagline: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+        paddingHorizontal: 14,
+        marginBottom: 30,
+        marginVertical: 6
+    },
+    Placename: {
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
+        paddingHorizontal: 14,
+        marginBottom: 30,
+        justifyContent: 'space-around'
+    },
+    BookBtn: {
+        position: 'absolute',
+        right: 12,
+        top: 220,
+        backgroundColor: 'black',
+        padding: 16,
+        borderRadius: 40,
+    },
+    BookText: {
+        color: 'white',
+        fontSize: 14
+    }
+})
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ getRoutes, newTicket }, dispatch)

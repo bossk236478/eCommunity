@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Ionicons, AntDesign } from '@expo/vector-icons'
 
-// import db from '../../../config/firebase';
-// import * as firebase from 'firebase';
+import db from '../../../config/firebase';
+import * as firebase from 'firebase';
 
 const screenWidth = Dimensions.get('window').width
 
@@ -18,6 +18,14 @@ export default class PostComponent extends React.Component {
         liked: undefined,
         numLike: 0,
         saved: undefined,
+    }
+
+    handlePostInteract = async (postID) => {
+        try {
+            const postsQuery = db.collection('posts').doc(postID).get()
+        } catch (e) {
+            alert(e)
+        }
     }
 
 
@@ -111,7 +119,7 @@ export default class PostComponent extends React.Component {
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            onPress={() => console.log(this.props.getUserPhoto(this.props.item.uid))}
+                            onPress={() => console.log(this.props.item.id)}
                         >
                             <Image source={require('../../../assets/Images/comment.jpg')} style={{ width: 25, height: 25, margin: 10 }} />
                         </TouchableOpacity>
