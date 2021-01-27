@@ -91,7 +91,7 @@ class BusRoutes extends React.Component {
                                 style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}
                                 onPress={() =>
                                     //this.handleSearch()
-                                    //console.log(item.id)
+                                    //console.log(item.price)
                                     this.props.navigation.navigate('BusRouteDetail', {
                                         id: item.id,
                                         name: item.name,

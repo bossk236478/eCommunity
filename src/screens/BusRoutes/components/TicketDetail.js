@@ -18,7 +18,7 @@ class TicketDetail extends React.Component {
         arrival: undefined,
         departure: undefined,
         detail: undefined,
-        price: undefined,
+        price: 0,
         currentUser: undefined,
         idTicket: uuid.v4()
     }

@@ -16,7 +16,7 @@ class BusRoutesDetail extends React.Component {
         arrival: undefined,
         departure: undefined,
         detail: undefined,
-        price: undefined,
+        price: 0,
         stations: undefined,
         currentUser: undefined,
         //qrString: uuid.v4()
@@ -44,9 +44,9 @@ class BusRoutesDetail extends React.Component {
                     style={{ width: '100%', height: 250, justifyContent: 'flex-end' }}
                     imageStyle={{ borderBottomRightRadius: 30, borderBottomLeftRadius: 30 }}
                 >
+                    <Text style={styles.Tickname}>{this.state.arrival} ---- {this.state.departure}</Text>
+                    <Text style={styles.Pricetag}>{this.state.price} per ticket</Text>
 
-                    <Text style={styles.Placename}>Explore</Text>
-                    <Text style={styles.Tagline}>{this.state.arrival} ---- {this.state.departure}</Text>
                 </ImageBackground>
                 <TouchableOpacity
                     style={styles.BookBtn}
@@ -84,21 +84,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    searchContainer: {
-        paddingTop: 100,
-        paddingLeft: 16
-    },
-    DarkOverlay: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        left: 0,
-        height: 270,
-        backgroundColor: '#000',
-        opacity: 0.2,
-        borderBottomRightRadius: 65
-    },
-    Tagline: {
+    Pricetag: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
@@ -106,9 +92,9 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         marginVertical: 6
     },
-    Placename: {
+    Tickname: {
         color: 'white',
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: 'bold',
         paddingHorizontal: 14,
         marginBottom: 30,

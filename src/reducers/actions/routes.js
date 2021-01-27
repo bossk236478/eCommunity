@@ -59,7 +59,7 @@ export const newTicket = (idTicket, uid, busID, arrival, departure, name, price)
                 .collection('users')
                 .doc(uid)
                 .update({
-                    tickets: firebase.firestore.FieldValue.arrayUnion(id)
+                    tickets: firebase.firestore.FieldValue.arrayUnion(idTicket)
                 })
             alert('Successfully')
         } catch (e) {

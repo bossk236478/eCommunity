@@ -147,7 +147,8 @@ class ProfileScreen extends React.Component {
                                     style={{ flex: 1, }}
                                     renderItem={({ item }) =>
                                         <TouchableOpacity
-                                            delayPressIn={500}
+                                            // delayPressIn={500}
+                                            activeOpacity={1}
                                             style={styles.mediaImageContainer}
                                             onPress={() => this.gotoPost(item)}>
                                             <Image source={{ uri: item.photos[0] }} style={styles.image} resizeMode="cover" />
