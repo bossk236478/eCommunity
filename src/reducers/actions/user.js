@@ -157,7 +157,7 @@ export const followUser = (uid_userToFollow) => {
             const { uid } = getState().user
 
             await db.collection('users').doc(uid).update({
-                following: firebase.firestore.FieldValue.arrayUnion(uid)
+                following: firebase.firestore.FieldValue.arrayUnion(uid_userToFollow)
             })
             await db.collection('users').doc(uid_userToFollow).update({
                 followers: firebase.firestore.FieldValue.arrayUnion(uid)
@@ -175,7 +175,7 @@ export const unfollowUser = (uid_userToFollow) => {
             const { uid } = getState().user
 
             await db.collection('users').doc(uid).update({
-                following: firebase.firestore.FieldValue.arrayRemove(uid)
+                following: firebase.firestore.FieldValue.arrayRemove(uid_userToFollow)
             })
             await db.collection('users').doc(uid_userToFollow).update({
                 followers: firebase.firestore.FieldValue.arrayRemove(uid)

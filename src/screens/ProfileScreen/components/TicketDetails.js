@@ -7,11 +7,9 @@ import { connect } from 'react-redux'
 import { getRoutes, newTicket } from '../../../reducers/actions/routes'
 import QRCode from 'react-native-qrcode-svg';
 
-import uuid from 'uuid'
-
 import moment from 'moment'
 
-class TicketDetail extends React.Component {
+class TicketDetails extends React.Component {
     state = {
         id: undefined,
         name: undefined,
@@ -20,7 +18,8 @@ class TicketDetail extends React.Component {
         detail: undefined,
         price: undefined,
         currentUser: undefined,
-        idTicket: uuid.v4()
+        date: undefined,
+        idTicket: undefined,
     }
     componentDidMount() {
         const { params } = this.props.route
@@ -32,13 +31,20 @@ class TicketDetail extends React.Component {
             detail: params.detail,
             price: params.price,
             stations: params.stations,
-            currentUser: params.currentUser
+            idTicket: params.idTicket,
+            date: params.date,
+            currentUser: params.currentUser,
         })
         //console.log(this.state.qrString)
     }
     handleConfirm() {
-        this.props.newTicket(this.state.idTicket, this.state.currentUser, this.state.id, this.state.arrival, this.state.departure, this.state.name, this.state.price)
-        this.props.navigation.replace('BusRoute')
+        //console.log(this.state.idTicket)
+        //this.props.newTicket(this.state.idTicket, this.state.currentUser, this.state.id, this.state.arrival, this.state.departure, this.state.name, this.state.price)
+        //this.props.navigation.replace('BusRoute')
+    }
+    handleChangeTime = (timestamp) => {
+        var d = new Date(timestamp)
+        alert(d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear());
     }
     render() {
         return (
@@ -63,17 +69,17 @@ class TicketDetail extends React.Component {
                         <Text style={{ fontSize: 20, color: '#FFF' }}>{this.state.departure}</Text>
                     </View>
 
-                    <Text style={{ paddingHorizontal: 40, color: '#a2a2db', }}>{moment(new Date().getTime()).format('ll')}</Text>
+                    <Text style={{ paddingHorizontal: 40, color: '#a2a2db', }}>{moment(this.state.date).format('ll')}</Text>
 
                     <View
                         onPress={this.props.onPress}
-                        style={{ marginLeft: 40, paddingHorizontal: 36, alignItems: 'center', marginTop: 30, backgroundColor: '#FFF', height: 265, width: 280, borderRadius: 15, borderWidth: 0.25 }}
+                        style={{ marginLeft: 40, paddingHorizontal: 36, alignItems: 'center', marginTop: 30, backgroundColor: '#FFF', height: 200, width: 280, borderRadius: 15, borderWidth: 0.25 }}
                     >
                         <View style={{ flexDirection: 'row', marginTop: 10, alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
                             <Text style={{ color: '#522289', fontSize: 16 }}>09:00 AM - 20:00 PM</Text>
                         </View>
 
-                        <Text style={{ color: "#a2a2db", fontSize: 12, }}>{moment(new Date().getTime()).format('ll')}</Text>
+                        <Text style={{ color: "#a2a2db", fontSize: 12, }}>{moment(this.state.date).format('ll')}</Text>
 
                         <View style={{ flexDirection: 'row', marginTop: 15, alignItems: 'center' }}>
                             <Text style={{ color: '#522289', fontSize: 16 }}>{this.props.user.username}</Text>
@@ -85,14 +91,6 @@ class TicketDetail extends React.Component {
                             <Text style={{ color: "#522289", fontSize: 16, }} >Total: </Text>
                             <Text style={{ color: "#4b3ca7", paddingLeft: 75, fontSize: 16, }} >{this.state.price} vnđ</Text>
                         </View>
-
-                        <TouchableOpacity
-                            style={{ height: 50, width: 200, marginLeft: 5, marginTop: 25, borderRadius: 25, borderWidth: 0.25, alignContent: "center", justifyContent: 'center' }}
-                            onPress={() => this.handleConfirm()
-                            }
-                        >
-                            <Text style={{ color: "black", textAlign: "center", fontSize: 18 }}>Confirm</Text>
-                        </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center', marginLeft: 105, marginBottom: 10 }}>
                         <QRCode
@@ -104,6 +102,7 @@ class TicketDetail extends React.Component {
                             color="black"
                         />
                     </View>
+
                 </ImageBackground>
 
             </SafeAreaView>
@@ -122,4 +121,4 @@ const mapStateToProps = (state) => {
         busRoute: state.busRoute
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(TicketDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(TicketDetails)

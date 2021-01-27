@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView, SafeAreaView, FlatList, Modal, TouchableHighlight, Alert } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Image, Dimensions, ScrollView, SafeAreaView, FlatList, Modal, TextInput } from 'react-native';
 import * as firebase from 'firebase';
 
 import db from '../../config/firebase';
@@ -20,7 +20,8 @@ class ProfileScreen extends React.Component {
     state = {
         visible: false,
         data: undefined,
-        modalVisible: false
+        modalVisible: false,
+        modalPassVisible: false,
     }
 
     componentDidMount = () => {
@@ -30,7 +31,6 @@ class ProfileScreen extends React.Component {
             //console.log(params)
         }
     }
-
     follow = () => {
         this.props.followUser(this.props.profile.uid)
     }
@@ -46,8 +46,14 @@ class ProfileScreen extends React.Component {
         this.setState({ modalVisible: visible });
     }
     handleChangePass() {
-        //this.props.navigation.navigate('Change Pass')
         this.setModalVisible(false)
+        firebase.auth().sendPasswordResetEmail(this.props.user.email).then(function () {
+            alert('Your password reset email have been sent!')
+        }).catch(function (e) {
+            alert(e)
+        })
+        alert('Please login again!')
+        firebase.auth().signOut()
     }
     handleLogOut() {
         firebase.auth().signOut()
@@ -68,10 +74,7 @@ class ProfileScreen extends React.Component {
                             >
                                 <AntDesign name="qrcode" size={50} color="black" />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setModalVisible(true)
-                                // firebase.auth().signOut()
-                            }>
-                                {/* <Ionicons name="md-exit" size={40} color="black" /> */}
+                            <TouchableOpacity onPress={() => this.setModalVisible(true)}>
                                 <Ionicons name="md-more" size={50} color="#52575D"></Ionicons>
                                 <Modal
                                     animationType='none'
@@ -86,7 +89,7 @@ class ProfileScreen extends React.Component {
                                             <TouchableOpacity
                                                 onPress={() => this.handleChangePass()}
                                             >
-                                                <Text style={styles.modalText}>Change Password</Text>
+                                                <Text style={styles.modalText}>Reset Password</Text>
                                             </TouchableOpacity>
                                             <TouchableOpacity
                                                 onPress={() => this.handleLogOut()}
@@ -139,7 +142,7 @@ class ProfileScreen extends React.Component {
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                                 <FlatList
                                     numColumns={10}
-                                    data={this.props.user?.posts}
+                                    data={this.props.user.posts}
                                     keyExtractor={(item) => JSON.stringify(item.date)}
                                     style={{ flex: 1, }}
                                     renderItem={({ item }) =>
@@ -219,7 +222,7 @@ class ProfileScreen extends React.Component {
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                                 <FlatList
                                     numColumns={10}
-                                    data={this.props.profile?.posts}
+                                    data={this.props.profile.posts}
                                     keyExtractor={(item) => JSON.stringify(item.date)}
                                     style={{ flex: 1, }}
                                     renderItem={({ item }) =>
@@ -343,7 +346,8 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
         height: screenHeight / 8,
-        width: screenWidth / 2
+        width: screenWidth / 2,
+        marginRight: 14
     },
     textStyle: {
         color: "white",
@@ -354,5 +358,5 @@ const styles = StyleSheet.create({
         textAlign: "center",
         marginBottom: 15,
         marginTop: 5
-    }
+    },
 });

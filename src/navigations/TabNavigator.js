@@ -9,6 +9,7 @@ import HomeNavigator from './HomeNavigatior'
 import SearchScreen from '../screens/SeachScreen'
 import ScannerScreen from '../screens/ScannerScreen'
 // import PostScreen from '../screens/PostScreen/PostScreen'
+import ProfileNavigator from './ProfileNavigator'
 import ProfileScreen from '../screens/ProfileScreen/ProfileScreen'
 import RoutesNavigator from './RoutesNavigator'
 //import BusRoutes from '../screens/BusRoutes/BusRoutes'
@@ -50,7 +51,7 @@ export default function MyTabs() {
             <Tab.Screen name="Route" component={RoutesNavigator} />
             {/* <Tab.Screen name="Post" component={PostScreen} /> */}
             {/* <Tab.Screen name="QRscanner" component={ScannerScreen} /> */}
-            <Tab.Screen name="Profile" component={ProfileScreen} />
+            <Tab.Screen name="Profile" component={ProfileNavigator} />
         </Tab.Navigator>
     )
 }

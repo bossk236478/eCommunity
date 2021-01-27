@@ -47,12 +47,12 @@ class SearchScreen extends React.Component {
                     <View style={styles.DarkOverlay}></View>
                     <View style={styles.searchContainer}>
                         <Text style={styles.UserGreet}>Hi {this.props.user.username}</Text>
-                        <Text style={styles.userText}>Search Station for Bus!</Text>
+                        <Text style={styles.userText}>Search for Users!</Text>
                     </View>
                     <View>
                         <TextInput
                             style={styles.searchBox}
-                            placeholder='Search Station'
+                            placeholder='Search users'
                             placeholderTextColor='#666'
                             onChangeText={(search) => this.handleSearch(search)}
                         />

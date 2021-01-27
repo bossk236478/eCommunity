@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import BusRoutes from '../screens/BusRoutes/BusRoutes'
 import BusRouteDetail from '../screens/BusRoutes/BusRouteDetail'
 import TicketDetail from '../screens/BusRoutes/components/TicketDetail'
-
+import TicketDetails from '../screens/ProfileScreen/components/TicketDetails'
 import TicketList from '../screens/TicketList'
 
 const Stack = createStackNavigator();
@@ -19,7 +19,8 @@ class RouteStack extends React.Component {
                 <Stack.Screen name="BusRoute" component={BusRoutes} options={{ headerShown: false, }} />
                 <Stack.Screen name="BusRouteDetail" component={BusRouteDetail} options={{ headerShown: false, }} />
                 <Stack.Screen name="TicketDetail" component={TicketDetail} options={{ headerShown: false, }} />
-                <Stack.Screen name="TicketList" component={TicketList} />
+                {/* <Stack.Screen name="TicketList" component={TicketList} />
+                <Stack.Screen name="TicketDetails" component={TicketDetails} options={{ headerShown: false, }} /> */}
                 {/* <Stack.Screen name="OnePost" component={OnePost} /> */}
             </Stack.Navigator>
         )

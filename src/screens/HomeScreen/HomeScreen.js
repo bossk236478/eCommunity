@@ -3,9 +3,14 @@ import { View, Text, StyleSheet, Image, FlatList, Dimensions, SafeAreaView, Touc
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getPosts, likePost, unlikePost, savePost, unsavePost, getOnePost } from '../../reducers/actions/posts'
+import { getPosts, likePost, unlikePost, savePost, unsavePost, getOnePost, getFollowingPosts } from '../../reducers/actions/posts'
+import { getUser } from '../../reducers/actions/user'
 
 import PostComponent from './components/PostComponent'
+
+import * as firebase from 'firebase';
+import db from '../../config/firebase';
+import { element } from 'prop-types';
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -14,30 +19,36 @@ const screenHeight = Dimensions.get("window").height;
 class HomeScreen extends React.Component {
     // constructor(props) {
     //     super(props)
-    //     this.props.getPosts()
+    //     this.props.getUser(this.props.user.uid, 'PROFILE')
+    //     this.props.getFollowingPosts(this.props.profile.following)
     //     this.state = {
-    //         data: this.props.post.feed,
+    //         data: this.props.post.following_feed,
     //         refreshing: false,
     //     }
     // }
+
     state = {
         data: this.props.post.feed,
         refreshing: false,
     }
+
     componentDidMount() {
         LogBox.ignoreLogs(['Setting a timer']);
         this.props.getPosts()
-        //console.log(this.props.post.feed)
-    }
+        //this.props.getUser(this.props.user.uid, 'PROFILE')
 
+        //this.props.getFollowingPosts(this.props.profile.following)
+        //this.props.getFollowingPosts()
+        //console.log(this.props.profile.following)
+    }
     handleRefresh() {
         this.setState({
             refreshing: true
         },
             () => {
+                // this.props.getUser(this.props.user.uid, 'PROFILE')
+                // this.props.getFollowingPosts()
                 this.props.getPosts()
-                // console.log(this.props.post.feed)
-                // console.log(this.state.data)
                 if (this.props.post.feed == this.state.data) {
                     this.setState({
                         refreshing: false
@@ -65,10 +76,7 @@ class HomeScreen extends React.Component {
                     <Text style={{ fontSize: 30, fontFamily: 'logo-font', color: 'black', marginTop: 5, marginLeft: 10 }}>eCommunity</Text>
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <TouchableOpacity
-                            onPress={() => 
-                                //console.log(this.props.user.email)
-                                this.props.navigation.navigate('Post')
-                            }
+                            onPress={() => this.props.navigation.navigate('Post')}
                         >
                             <Image source={require('../../assets/Images/share.jpg')} style={{ width: 26, height: 26, margin: 10 }} />
                         </TouchableOpacity>
@@ -92,6 +100,7 @@ class HomeScreen extends React.Component {
                             <PostComponent
                                 item={item}
                                 user={this.props.user}
+                                //deletePost={this.props.deletePost(item)}
                                 likePost={(item) => this.props.likePost(item)}
                                 unlikePost={(item) => this.props.unlikePost(item)}
                                 savePost={(item) => this.props.savePost(item)}
@@ -107,12 +116,13 @@ class HomeScreen extends React.Component {
     }
 }
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({  getPosts, likePost, unlikePost, savePost, unsavePost, getOnePost}, dispatch)
+    return bindActionCreators({ getUser, getPosts, likePost, unlikePost, savePost, unsavePost, getOnePost, getFollowingPosts }, dispatch)
 }
 const mapStateToProps = (state) => {
     return {
         user: state.user,
-        post: state.post
+        post: state.post,
+        profile: state.profile
     }
 }
 

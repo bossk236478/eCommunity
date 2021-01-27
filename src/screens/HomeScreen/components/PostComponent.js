@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Dimensions, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native'
+import { View, Text, Dimensions, Image, TouchableOpacity, ScrollView, TextInput, StyleSheet, Modal } from 'react-native'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { Ionicons, AntDesign } from '@expo/vector-icons'
@@ -7,7 +7,8 @@ import { Ionicons, AntDesign } from '@expo/vector-icons'
 import db from '../../../config/firebase';
 import * as firebase from 'firebase';
 
-const screenWidth = Dimensions.get('window').width
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
 export default class PostComponent extends React.Component {
 
@@ -18,6 +19,12 @@ export default class PostComponent extends React.Component {
         liked: undefined,
         numLike: 0,
         saved: undefined,
+        delete: false,
+        modalVisible: false,
+    }
+    componentDidMount() {
+        // const { params } = this.props.route
+        // console.log(params)
     }
 
     handlePostInteract = async (postID) => {
@@ -27,7 +34,19 @@ export default class PostComponent extends React.Component {
             alert(e)
         }
     }
-
+    setModalVisible = (visible) => {
+        if (this.props.item.uid == this.props.user.uid) {
+            this.setState({
+                delete: true,
+                modalVisible: visible
+            })
+        } else {
+            this.setState({
+                delete: false,
+                modalVisible: false
+            })
+        }
+    }
 
     likePost = () => {
         if ((this.props.item.likes.includes(this.props.user.uid)) || this.state.liked == true) {
@@ -65,10 +84,47 @@ export default class PostComponent extends React.Component {
             this.props.savePost(this.props.item)
         }
     }
+    deletePost = () => {
+        db.collection('posts').doc(this.props.item.id).delete().then(function () {
+            alert('Successfully')
+        }).catch(function (e) {
+            alert(e)
+        })
+        this.setState({
+            delete: false,
+            modalVisible: false
+        })
+        this.props.navigation.navigate("Home")
+    }
 
     render() {
+        const { modalVisible } = this.state;
+        // const { params } = this.props.route
         return (
             <View style={{ paddingBottom: 20, borderBottomWidth: 0.5 }}>
+                <Modal
+                    animationType='none'
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        this.setModalVisible(!modalVisible)
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            {
+                                (this.state.delete) ?
+                                    <TouchableOpacity
+                                        onPress={() => this.deletePost()
+                                        }
+                                    >
+                                        <Text style={styles.modalText}>Delete</Text>
+                                    </TouchableOpacity>
+                                    : null
+                            }
+                        </View>
+                    </View>
+                </Modal>
                 <View style={{ width: screenWidth, height: 80, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomColor: 'grey', borderBottomWidth: 0.07 }}>
                     <TouchableOpacity
                         onPress={() =>
@@ -81,7 +137,14 @@ export default class PostComponent extends React.Component {
                         {/* <Text style={{ margin: 15 }}>{moment(this.props.item.date).format('ll')}</Text> */}
                     </TouchableOpacity>
                     {/* <Text style={{ margin: 15 }}>{moment(this.props.item.date).format('ll')}</Text> */}
-                    <Ionicons name="md-more" size={40} color="black" style={{ marginRight: 10 }}></Ionicons>
+                    <TouchableOpacity
+                        onPress={() =>
+                            //console.log(params)
+                            this.setModalVisible(true)
+                        }
+                    >
+                        <Ionicons name="md-more" size={40} color="black" style={{ marginRight: 10 }}></Ionicons>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: "row", alignItems: 'center' }}>
                     <Text style={{ fontSize: 18, marginLeft: 20, marginTop: -5, marginBottom: 5 }}>{this.props.item.description}</Text>
@@ -118,11 +181,11 @@ export default class PostComponent extends React.Component {
                             }
                         </TouchableOpacity>
 
-                        <TouchableOpacity
+                        {/* <TouchableOpacity
                             onPress={() => console.log(this.props.item.id)}
                         >
                             <Image source={require('../../../assets/Images/comment.jpg')} style={{ width: 25, height: 25, margin: 10 }} />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
 
                         <TouchableOpacity
                             onPress={() => this.savePost()}>
@@ -167,3 +230,40 @@ export default class PostComponent extends React.Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    centeredView: {
+        flex: 1,
+        justifyContent: "flex-start",
+        alignItems: "flex-end",
+        marginTop: 20
+    },
+    modalView: {
+        marginTop: 10,
+        backgroundColor: "white",
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        height: screenHeight / 10,
+        width: screenWidth / 4,
+        marginRight: 14
+    },
+    textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+    },
+    modalText: {
+        textAlign: "center",
+        marginBottom: 15,
+        marginTop: 5
+    },
+})

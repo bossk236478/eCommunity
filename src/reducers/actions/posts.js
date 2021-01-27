@@ -48,7 +48,7 @@ export const uploadPost = () => {
                 id: id,
                 uid: user.uid,
                 photo: user.photo,
-                photos: post.photos||'',
+                photos: post.photos || '',
                 username: user.username,
                 date: new Date().getTime(),
                 savedBy: [],
@@ -87,6 +87,27 @@ export const getPosts = (numberOfPosts) => {
         //console.log(array)
 
         dispatch({ type: "GET_POSTS", payload: array })
+    }
+}
+export const getFollowingPosts = () => {
+    return async (dispatch, getState) => {
+        const { user } = getState()
+        let usersFollowedArray = user.following
+        console.log(usersFollowedArray)
+        const posts = await db.collection('posts').orderBy('date', 'desc').where('uid', 'in', usersFollowedArray).get()
+
+        const userPosts = await db.collection('posts').orderBy('date', 'desc').where('uid', '==', user.uid).get()
+        let array = []
+        posts.forEach((post) => {
+            array.push(post.data())
+
+        })
+        userPosts.forEach((post) => {
+            array.push(post.data())
+        })
+        //console.log(array)
+
+        dispatch({ type: 'GET_FRIENDS_POSTS', payload: array })
     }
 }
 export const getOnePost = (post) => {
@@ -183,12 +204,16 @@ export const unlikePost = (post) => {
     }
 }
 
-export const deletePost = () => {
+export const deletePost = (post) => {
     return async (dispatch, getState) => {
         try {
-            const { uid } = getState().user
+            // const { id } = getState().post
 
-            
+            db.collection('posts').doc(post.id).delete().then(function () {
+                alert('Successfully')
+            }).catch(function (e) {
+                alert(e)
+            })
         } catch (e) {
             alert(e)
         }

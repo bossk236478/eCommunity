@@ -33,13 +33,13 @@ export const getRoutes = () => {
 //         dispatch({ type: "GET_SPECIFIC_ROUTES", payload: array })
 //     }
 // }
-export const newTicket = (uid, busID, arrival, departure, name, price) => {
+export const newTicket = (idTicket, uid, busID, arrival, departure, name, price) => {
     return async () => {
         try {
-            const id = uuid.v4()
-            //console.log(qrString)
+            //const id = uuid.v4()
+            console.log(idTicket)
             const upload = {
-                id: id,
+                id: idTicket,
                 uid: uid,
                 busID: busID,
                 //url: qrString,
@@ -47,13 +47,13 @@ export const newTicket = (uid, busID, arrival, departure, name, price) => {
                 arrival: arrival,
                 departure: departure,
                 name: name,
-                price:price,
+                price: price,
                 status: 'active'
             }
 
             await db
                 .collection('tickets')
-                .doc(id)
+                .doc(idTicket)
                 .set(upload)
             await db
                 .collection('users')

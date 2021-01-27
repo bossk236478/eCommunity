@@ -69,13 +69,13 @@ class BusRoutes extends React.Component {
                 >
                     <View style={styles.DarkOverlay}></View>
                     <View style={styles.searchContainer}>
-                        <Text style={styles.UserGreet}>Hi {this.props.user.name}</Text>
+                        <Text style={styles.UserGreet}>Hi {this.props.user.username}</Text>
                         <Text style={styles.userText}>Search Station for Bus!</Text>
                     </View>
                     <View>
                         <TextInput
                             style={styles.searchBox}
-                            placeholder='Search Station'
+                            placeholder='Search station'
                             placeholderTextColor='#666'
                             onChangeText={(search) => this.handleSearch(search)}
                         />
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 65
     },
     UserGreet: {
-        fontSize: 38,
+        fontSize: 35,
         fontWeight: 'bold',
         color: 'white'
     },

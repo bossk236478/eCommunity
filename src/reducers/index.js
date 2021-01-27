@@ -84,6 +84,10 @@ const post = (state = {}, action) => {
             return {
                 ...state, saved_feed: action.payload
             }
+        case 'GET_FRIENDS_POSTS':
+            return {
+                ...state, following_feed: action.payload
+            }
         default:
             return state;
     }
