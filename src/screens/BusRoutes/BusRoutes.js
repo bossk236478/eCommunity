@@ -45,7 +45,7 @@ class BusRoutes extends React.Component {
     }
 
     handleSearch = (search) => {
-        console.log(this.state.data)
+        //console.log(this.state.data)
         let result = this.props.busRoute.feed.filter(item => {
             const itemData = `${item.name.toUpperCase()} ${item.stations.toUpperCase()}`
             const textData = search.toUpperCase()
@@ -83,7 +83,7 @@ class BusRoutes extends React.Component {
                     </View>
                 </ImageBackground>
                 <FlatList
-                    data={this.props.busRoute.feed}
+                    data={this.state.data}
                     keyExtractor={item => JSON.stringify(item.id)}
                     renderItem={({ item }) => (
                         <View style={{ width: screenWidth, height: 60, flexDirection: 'row', backgroundColor: 'white', justifyContent: 'space-between', alignItems: 'center', borderBottomColor: 'grey', borderBottomWidth: 0.07 }}>

@@ -62,7 +62,7 @@ class SearchScreen extends React.Component {
                 <FlatList
                     numColumns={1}
                     horizontal={false}
-                    data={this.props.user.userData}
+                    data={this.state.data}
                     keyExtractor={item => JSON.stringify(item.uid)}
                     renderItem={({ item }) => (
                         <View style={{ width: screenWidth, height: 80, backgroundColor: 'white', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomColor: 'grey', borderBottomWidth: 0.07 }}>

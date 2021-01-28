@@ -38,7 +38,7 @@ export const newTicket = (idTicket, uid, busID, arrival, departure, name, price)
     return async () => {
         try {
             //const id = uuid.v4()
-            console.log(idTicket)
+            //console.log(idTicket)
             const upload = {
                 id: idTicket,
                 uid: uid,
