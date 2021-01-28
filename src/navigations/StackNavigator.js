@@ -1,5 +1,5 @@
 import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import { TouchableOpacity, Text, ToastAndroid } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack';
 
 import TabNavigator from './TabNavigator'
@@ -26,7 +26,7 @@ class MyStack extends React.Component {
 
     uploadPost = () => {
         this.props.navigation.navigate('TabNavigator')
-        alert('Posted')
+        ToastAndroid.show('Posted', ToastAndroid.SHORT)
         this.props.uploadPost()
         this.props.getPosts()
     }
@@ -36,7 +36,7 @@ class MyStack extends React.Component {
             <Stack.Navigator>
                 <Stack.Screen name="TabNavigator" component={TabNavigator} options={{ headerShown: false, }} />
                 <Stack.Screen name="OnePost" component={OnePost} options={{ headerShown: false, }} />
-                <Stack.Screen name="SavedPosts" component={SavedPosts}  />
+                <Stack.Screen name="SavedPosts" component={SavedPosts} />
                 <Stack.Screen name="ProfileScreen" component={ProfileScreen} options={{ headerShown: false, }} />
                 <Stack.Screen name="TicketList" component={TicketList} />
                 <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false, }} />

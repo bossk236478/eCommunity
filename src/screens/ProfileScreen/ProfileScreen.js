@@ -22,6 +22,8 @@ class ProfileScreen extends React.Component {
         data: undefined,
         modalVisible: false,
         modalPassVisible: false,
+
+        refreshing: false
     }
 
     componentDidMount = () => {
@@ -58,6 +60,28 @@ class ProfileScreen extends React.Component {
     handleLogOut() {
         firebase.auth().signOut()
         this.setModalVisible(false)
+    }
+    handleRefresh() {
+        this.setState({
+            refreshing: true
+        },
+            () => {
+                const { params } = this.props.route
+                this.props.getUser(params, 'PROFILE')
+                if (this.props.user.posts == this.state.data) {
+                    this.setState({
+                        refreshing: false
+                    })
+                    //console.log('==')
+                } else {
+                    this.setState({
+                        data: this.props.user.posts,
+                        refreshing: false
+                    })
+                    //console.log('!==')
+                }
+            }
+        )
     }
     render() {
         const { modalVisible } = this.state;
@@ -141,8 +165,10 @@ class ProfileScreen extends React.Component {
                         <View style={{ marginTop: 15 }}>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                                 <FlatList
+                                    onRefresh={() => this.handleRefresh()}
+                                    refreshing={this.state.refreshing}
                                     numColumns={10}
-                                    data={this.props.user.posts}
+                                    data={this.props.user?.posts}
                                     keyExtractor={(item) => JSON.stringify(item.date)}
                                     style={{ flex: 1, }}
                                     renderItem={({ item }) =>
@@ -223,7 +249,7 @@ class ProfileScreen extends React.Component {
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                                 <FlatList
                                     numColumns={10}
-                                    data={this.props.profile.posts}
+                                    data={this.props.profile?.posts}
                                     keyExtractor={(item) => JSON.stringify(item.date)}
                                     style={{ flex: 1, }}
                                     renderItem={({ item }) =>

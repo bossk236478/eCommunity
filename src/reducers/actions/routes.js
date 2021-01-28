@@ -1,5 +1,6 @@
 import db from '../../config/firebase';
 import * as firebase from 'firebase';
+import { ToastAndroid } from 'react-native'
 import uuid from 'uuid';
 
 export const getRoutes = () => {
@@ -61,7 +62,7 @@ export const newTicket = (idTicket, uid, busID, arrival, departure, name, price)
                 .update({
                     tickets: firebase.firestore.FieldValue.arrayUnion(idTicket)
                 })
-            alert('Successfully')
+            ToastAndroid.show('Successfully', ToastAndroid.SHORT)
         } catch (e) {
             alert(e)
         }
@@ -87,18 +88,3 @@ export const getBusInfo = (uid, busID) => {
         }
     }
 }
-// export const getTickets = () => {
-//     return async (dispatch, getState) => {
-//         const tickQuery = await db
-//             .collection("routes")
-//             .get()
-
-//         let array = []
-//         routes.forEach(route => {
-//             array.push(route.data())
-//         });
-//         //console.log(array)
-
-//         dispatch({ type: "GET_TICKETS", payload: array })
-//     }
-// }

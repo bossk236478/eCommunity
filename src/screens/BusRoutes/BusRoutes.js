@@ -83,7 +83,7 @@ class BusRoutes extends React.Component {
                     </View>
                 </ImageBackground>
                 <FlatList
-                    data={this.state.data}
+                    data={this.props.busRoute.feed}
                     keyExtractor={item => JSON.stringify(item.id)}
                     renderItem={({ item }) => (
                         <View style={{ width: screenWidth, height: 60, flexDirection: 'row', backgroundColor: 'white', justifyContent: 'space-between', alignItems: 'center', borderBottomColor: 'grey', borderBottomWidth: 0.07 }}>

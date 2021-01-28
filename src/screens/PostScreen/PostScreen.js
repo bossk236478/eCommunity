@@ -22,7 +22,7 @@ class PostScreen extends React.Component {
 
     openLibrary = async () => {
         try {
-            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+            const { status } = await Permissions.askAsync(Permissions.CAMERA)
             if (status === 'granted') {
                 const image = await ImagePicker.launchImageLibraryAsync({
                     allowsEditing: true
